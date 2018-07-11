@@ -1,0 +1,9 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "welcome";
+@import "devise";
+
+.navbar-user {
+  float: right;
+  margin: 10px 15px auto auto;
+}
