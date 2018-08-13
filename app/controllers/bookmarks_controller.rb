@@ -30,7 +30,7 @@ class BookmarksController < ApplicationController
   end
 
   def update
-    @topic = Topic.find(params[:topic_id])
+    @topic = Topic.find(params[:topic_id]) 
     @bookmark = Bookmark.find(params[:id])
     @bookmark.assign_attributes(bookmark_params)
 
