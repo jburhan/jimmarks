@@ -3,7 +3,9 @@
   <%= link_to "Delete Topic", @topic, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this topic?' } %>
 </h1>
 
+<% if policy(Bookmark.new).create? %>
  <%= link_to "New Bookmark", new_topic_bookmark_path(@topic), class: 'btn btn-success' %>
+<% end %>
 
   <div class="row">
     <div class="col-md-8">
@@ -11,10 +13,14 @@
       <div class="media">
         <div class="media-body">
           <h4 class="media-heading">
-             <%= link_to bookmark.url, [@topic, bookmark] %>
-             <%= link_to "Delete Bookmark", [@topic, bookmark], method: :delete, class: 'glyphicon glyphicon-remove-circle', data: { confirm: "Are you sure you want to delete this bookmark?" } %> <br>
-             <%= link_to "Edit Bookmark", edit_topic_bookmark_path(@topic, bookmark), class: 'glyphicon glyphicon-pencil' %>
-          </h4>
+            <%= link_to bookmark.url, [@topic, bookmark] %>
+            <% if policy(bookmark).destroy? %>
+              <%= link_to "Delete Bookmark", [@topic, bookmark], method: :delete, class: 'glyphicon glyphicon-remove-circle', data: { confirm: "Are you sure you want to delete this bookmark?" } %> <br>
+            <% end %>
+            <% if policy(bookmark).edit? %>
+              <%= link_to "Edit Bookmark", edit_topic_bookmark_path(@topic, bookmark), class: 'glyphicon glyphicon-pencil' %>
+            <% end %>
+           </h4>
         </div>
       </div>
       <% end %>

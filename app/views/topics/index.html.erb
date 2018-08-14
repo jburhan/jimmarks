@@ -1,5 +1,8 @@
 
-<h1> Topics <%= link_to "New Topic", new_topic_path, class: 'btn btn-success' %> </h1>
+<h1> Topics  </h1>
+  <% if policy(Bookmark.new).create? %>
+    <%= link_to "New Topic", new_topic_path, class: 'btn btn-success' %>
+  <% end %>
 
   <div class="row">
     <div class="col-md-8">
@@ -9,7 +12,6 @@
           <h4 class="media-heading">
              <%= link_to topic.title, topic %>
              <div class="bookmark_box">
-               <p> Filler </p>
              </div>
           </h4>
         </div>
