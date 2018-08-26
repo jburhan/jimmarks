@@ -1,6 +1,7 @@
 class BookmarksController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user! :set_topic
   after_action :verify_authorized, :except => :index
+
 
   def show
     @bookmark = Bookmark.find(params[:id])
@@ -8,7 +9,6 @@ class BookmarksController < ApplicationController
   end
 
   def new
-    @topic = Topic.find(params[:topic_id])
     @bookmark = Bookmark.new
     authorize @bookmark
   end
@@ -16,7 +16,6 @@ class BookmarksController < ApplicationController
   def create
     @bookmark = Bookmark.new
     @bookmark.url = params[:bookmark][:url]
-    @topic = Topic.find(params[:topic_id])
     @bookmark.topic = @topic
     @bookmark.user = current_user
     authorize @bookmark
@@ -31,13 +30,11 @@ class BookmarksController < ApplicationController
   end
 
   def edit
-    @topic = Topic.find(params[:topic_id])
     @bookmark = Bookmark.find(params[:id])
     authorize @bookmark
   end
 
   def update
-    @topic = Topic.find(params[:topic_id])
     @bookmark = Bookmark.find(params[:id])
     @bookmark.assign_attributes(bookmark_params)
     authorize @bookmark
@@ -52,7 +49,6 @@ class BookmarksController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:topic_id])
     @bookmark = Bookmark.find(params[:id])
     authorize @bookmark
 
@@ -69,6 +65,10 @@ class BookmarksController < ApplicationController
 
   def bookmark_params
     params.require(:bookmark).permit(:url)
+  end
+
+  def set_topic
+    @topic = Topic.find(params[:topic_id])
   end
 
 end
